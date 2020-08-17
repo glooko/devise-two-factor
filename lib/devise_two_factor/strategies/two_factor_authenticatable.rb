@@ -20,7 +20,8 @@ module Devise
       end
 
       def validate_otp(resource)
-        return true unless resource.otp_required_for_login
+        return true unless resource.two_factor_enabled?
+
         return if params[scope]['otp_attempt'].nil?
         resource.validate_and_consume_otp!(params[scope]['otp_attempt'])
       end
